@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAG SERWIS – Grzegorz Machniak | Hydraulik</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b1f3a;
+    --blue: #1a4a8a;
+    --accent: #e8a020;
+    --accent2: #f0c060;
+    --light: #f4f7fb;
+    --white: #fff;
+    --gray: #8a99ab;
+    --text: #1c2b3a;
+    --pipe: #c5d4e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,31,58,0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--white);
+    letter-spacing: 0.04em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--pipe);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--navy) !important;
+    padding: 7px 18px;
+    border-radius: 4px;
+    font-weight: 700 !important;
+  }
+  .nav-cta:hover { background: var(--accent2); color: var(--navy) !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+
+  /* pipe grid background */
+  .pipe-bg {
+    position: absolute; inset: 0;
+    opacity: 0.06;
+    background-image:
+      linear-gradient(var(--pipe) 1px, transparent 1px),
+      linear-gradient(90deg, var(--pipe) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* large decorative pipe element */
+  .hero-pipe-right {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 42vw;
+    background: linear-gradient(135deg, #112d5a 0%, #0b1f3a 100%);
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* SVG pipe illustration */
+  .pipe-illustration {
+    position: absolute; right: 4vw; top: 50%;
+    transform: translateY(-50%);
+    width: min(38vw, 460px);
+    opacity: 0.18;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 120px 5vw 80px;
+    max-width: 640px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,160,32,0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 3px;
+    margin-bottom: 1.6rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content: '●'; font-size: 0.5rem; }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--pipe);
+    line-height: 1.7;
+    max-width: 480px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-actions {
+    margin-top: 2.4rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--navy);
+    padding: 14px 30px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background .2s, transform .15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-outline {
+    border: 2px solid rgba(197,212,232,0.4);
+    color: var(--pipe);
+    padding: 12px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: border-color .2s, color .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    margin-top: 3rem;
+    display: flex; gap: 2.5rem;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.4rem; font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+
+  /* ─── STRIP ─── */
+  .strip {
+    background: var(--accent);
+    padding: 14px 5vw;
+    display: flex; align-items: center; justify-content: center;
+    gap: 2.5rem; flex-wrap: wrap;
+  }
+  .strip-item {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--navy);
+  }
+  .strip-icon { font-size: 1.1rem; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 90px 5vw; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--navy);
+    line-height: 1.05;
+  }
+  .section-title span { color: var(--blue); }
+  .section-desc {
+    margin-top: 1rem;
+    font-size: 1.05rem; font-weight: 300;
+    color: #4a6080;
+    line-height: 1.8;
+    max-width: 560px;
+  }
+
+  /* ─── ACCORDION ─── */
+  #uslugi { background: var(--white); }
+  .accordion {
+    margin-top: 3rem;
+    border: 1.5px solid #d8e4f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .acc-item {
+    border-bottom: 1.5px solid #d8e4f0;
+  }
+  .acc-item:last-child { border-bottom: none; }
+  .acc-header {
+    width: 100%; background: none; border: none; cursor: pointer;
+    padding: 1.4rem 1.8rem;
+    display: flex; align-items: center; gap: 1.2rem;
+    text-align: left;
+    transition: background .2s;
+  }
+  .acc-header:hover { background: #f0f6ff; }
+  .acc-header.open { background: #f0f6ff; }
+  .acc-icon {
+    min-width: 44px; height: 44px;
+    background: var(--navy);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .acc-header.open .acc-icon { background: var(--blue); }
+  .acc-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem; font-weight: 800;
+    text-transform: uppercase;
+    color: var(--navy);
+    flex: 1;
+  }
+  .acc-arrow {
+    font-size: 1.1rem;
+    color: var(--gray);
+    transition: transform .3s;
+    flex-shrink: 0;
+  }
+  .acc-header.open .acc-arrow { transform: rotate(180deg); color: var(--accent); }
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease, padding .35s ease;
+    padding: 0 1.8rem;
+    background: #f8fafd;
+  }
+  .acc-body.open {
+    max-height: 300px;
+    padding: 1.2rem 1.8rem 1.6rem;
+  }
+  .acc-body p {
+    font-size: 0.97rem; font-weight: 300;
+    color: #4a6080;
+    line-height: 1.8;
+  }
+  .acc-body ul {
+    margin-top: 0.7rem;
+    padding-left: 1.2rem;
+    display: flex; flex-wrap: wrap; gap: 0.3rem 2rem;
+  }
+  .acc-body ul li {
+    font-size: 0.9rem; color: #4a6080; line-height: 1.8;
+  }
+
+  /* ─── WHY ─── */
+  #dlaczego {
+    background: var(--navy);
+    position: relative; overflow: hidden;
+  }
+  #dlaczego .pipe-bg { opacity: 0.04; }
+  #dlaczego .section-title { color: var(--white); }
+  #dlaczego .section-desc { color: var(--pipe); }
+
+  .why-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+  }
+  .why-card {
+    border-left: 3px solid var(--accent);
+    padding-left: 1.4rem;
+  }
+  .why-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 3rem; font-weight: 900;
+    color: rgba(232,160,32,0.2);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .why-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem; font-weight: 800;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .why-text {
+    font-size: 0.95rem; font-weight: 300;
+    color: var(--pipe);
+    line-height: 1.7;
+  }
+
+  /* ─── REALIZACJE ─── */
+  #realizacje { background: var(--light); }
+  .projects-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 16px rgba(11,31,58,0.07);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(11,31,58,0.13); }
+  .project-thumb {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+  .project-thumb.t1 { background: linear-gradient(135deg, #1a4a8a, #0b2850); }
+  .project-thumb.t2 { background: linear-gradient(135deg, #2a5a3a, #0b2820); }
+  .project-thumb.t3 { background: linear-gradient(135deg, #5a2a1a, #2a1008); }
+  .project-body { padding: 1.4rem; }
+  .project-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .project-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem; font-weight: 800;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin: 0.3rem 0 0.5rem;
+  }
+  .project-detail { font-size: 0.9rem; color: #4a6080; line-height: 1.6; }
+
+  /* ─── CONTACT ─── */
+  #kontakt { background: var(--white); }
+  .contact-wrap {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  .contact-info-block { display: flex; flex-direction: column; gap: 1.8rem; }
+  .contact-item { display: flex; align-items: flex-start; gap: 1.2rem; }
+  .contact-item-icon {
+    min-width: 48px; height: 48px;
+    background: var(--navy);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .contact-item-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 2px;
+  }
+  .contact-item-value {
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--navy);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .contact-item-value:hover { color: var(--blue); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--navy);
+  }
+  .field input, .field textarea, .field select {
+    padding: 11px 14px;
+    border: 1.5px solid #c5d4e8;
+    border-radius: 4px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--light);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--blue); }
+  .field textarea { resize: vertical; min-height: 110px; }
+
+  .form-submit {
+    background: var(--accent);
+    color: var(--navy);
+    border: none; cursor: pointer;
+    padding: 14px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: 4px;
+    align-self: flex-start;
+    transition: background .2s, transform .15s;
+  }
+  .form-submit:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #060e1a;
+    color: var(--gray);
+    padding: 2rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    font-size: 0.88rem;
+  }
+  footer strong { color: var(--pipe); }
+
+  /* ─── ANIM ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .hero-pipe-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MAG <span>SERWIS</span></div>
+  <ul class="nav-links">
+    <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#dlaczego">O nas</a></li>
+    <li><a href="#realizacje">Realizacje</a></li>
+    <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="pipe-bg"></div>
+  <div class="hero-pipe-right"></div>
+  <!-- decorative pipes SVG -->
+  <svg class="pipe-illustration" viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="60" y="30" width="28" height="300" rx="6" fill="white"/>
+    <rect x="40" y="30" width="68" height="28" rx="6" fill="white"/>
+    <rect x="40" y="302" width="68" height="28" rx="6" fill="white"/>
+    <rect x="108" y="42" width="200" height="16" rx="4" fill="white"/>
+    <rect x="290" y="42" width="16" height="150" rx="4" fill="white"/>
+    <rect x="270" y="42" width="56" height="16" rx="4" fill="white"/>
+    <rect x="270" y="174" width="56" height="16" rx="4" fill="white"/>
+    <circle cx="298" cy="130" r="18" fill="none" stroke="white" stroke-width="10"/>
+    <rect x="140" y="160" width="28" height="200" rx="6" fill="white"/>
+    <rect x="120" y="340" width="160" height="20" rx="4" fill="white"/>
+    <rect x="262" y="280" width="20" height="80" rx="4" fill="white"/>
+    <circle cx="80" cy="190" r="22" fill="none" stroke="white" stroke-width="10"/>
+    <rect x="320" y="220" width="60" height="18" rx="4" fill="white"/>
+    <rect x="362" y="220" width="18" height="120" rx="4" fill="white"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">Usługi hydrauliczne · Ożarów Mazowiecki i okolice</div>
+    <h1>Instalacje<em>Wodne &amp; Grzewcze</em></h1>
+    <p class="hero-sub">MAG SERWIS Grzegorz Machniak – kompleksowe usługi hydrauliczne dla domu i firmy. Szybka realizacja, solidna robota, uczciwe ceny.</p>
+    <div class="hero-actions">
+      <a href="tel:+48000000000" class="btn-primary">📞 Zadzwoń teraz</a>
+      <a href="#uslugi" class="btn-outline">Zobacz usługi →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Lat doświadczenia</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Zrealizowanych zleceń</div>
+      </div>
+      <div>
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Awarie – szybki dojazd</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><span class="strip-icon">✅</span> Uprawnienia SEP</div>
+  <div class="strip-item"><span class="strip-icon">✅</span> Ubezpieczenie OC</div>
+  <div class="strip-item"><span class="strip-icon">✅</span> Gwarancja na usługi</div>
+  <div class="strip-item"><span class="strip-icon">✅</span> Awarie 7 dni w tygodniu</div>
+</div>
+
+<!-- USŁUGI -->
+<section id="uslugi">
+  <div class="section-label">Co robimy</div>
+  <div class="section-title">Nasze <span>Usługi</span></div>
+  <p class="section-desc">Oferujemy pełen zakres prac hydraulicznych – od drobnych napraw po kompleksowe instalacje w nowych budynkach.</p>
+
+  <div class="accordion">
+
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-icon">🔧</div>
+        <span class="acc-title">Instalacje wodno-kanalizacyjne</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <p>Montaż i modernizacja instalacji wody zimnej i ciepłej oraz kanalizacji sanitarnej – zarówno w nowych budowach, jak i podczas remontów.</p>
+        <ul>
+          <li>Rury PEX, miedź, PP</li>
+          <li>Podejścia pod armaturę</li>
+          <li>Kanalizacja pionowa i pozioma</li>
+          <li>Próby szczelności</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-icon">🔥</div>
+        <span class="acc-title">Instalacje grzewcze (CO)</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <p>Projektowanie i montaż kompletnych systemów centralnego ogrzewania. Dobór i instalacja kotłów, grzejników, pomp ciepła.</p>
+        <ul>
+          <li>Kotły gazowe kondensacyjne</li>
+          <li>Pompy ciepła</li>
+          <li>Ogrzewanie podłogowe</li>
+          <li>Grzejniki panelowe i aluminiowe</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-icon">🚿</div>
+        <span class="acc-title">Łazienki i kuchnie</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <p>Kompleksowy montaż armatury sanitarnej – od podejść po finalne podłączenie. Pracujemy równolegle z ekipą remontową lub samodzielnie.</p>
+        <ul>
+          <li>Wanny, prysznice, kabiny</li>
+          <li>Umywalki, zlewozmywaki</li>
+          <li>WC, bidety</li>
+          <li>Podłączenie pralki, zmywarki</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-icon">💧</div>
+        <span class="acc-title">Usuwanie awarii</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <p>Szybki dojazd do awarii hydraulicznych 7 dni w tygodniu. Działamy w trybie pilnym – zazwyczaj jesteśmy na miejscu w ciągu 2–4 godzin.</p>
+        <ul>
+          <li>Pęknięte rury i nieszczelności</li>
+          <li>Zalanie, wyciek wody</li>
+          <li>Brak ogrzewania lub ciepłej wody</li>
+          <li>Zatkana kanalizacja</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-icon">🏗️</div>
+        <span class="acc-title">Przyłącza wody i kanalizacji</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <p>Wykonujemy przyłącza do sieci miejskiej wodociągowej i kanalizacyjnej. Prowadzimy dokumentację i współpracujemy z nadzorami budowlanymi.</p>
+        <ul>
+          <li>Przyłącze wodociągowe</li>
+          <li>Przyłącze kanalizacji sanitarnej</li>
+          <li>Odbiory techniczne</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        <div class="acc-icon">🔍</div>
+        <span class="acc-title">Przeglądy i serwis</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <p>Regularna konserwacja i serwisowanie instalacji przedłuża ich żywotność i zapobiega kosztownym awariom.</p>
+        <ul>
+          <li>Przeglądy roczne instalacji</li>
+          <li>Serwis kotłów gazowych</li>
+          <li>Regulacja ciśnienia i zaworu</li>
+          <li>Uszczelnianie połączeń</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DLACZEGO -->
+<section id="dlaczego">
+  <div class="pipe-bg"></div>
+  <div class="section-label" style="position:relative">Dlaczego my</div>
+  <div class="section-title" style="position:relative; color:var(--white)">Solidność, którą<br><span style="color:var(--accent)">widać w pracy</span></div>
+  <p class="section-desc" style="position:relative; color:var(--pipe)">Grzegorz Machniak to hydraulik z długoletnim stażem. Pracujemy rzetelnie, punktualnie i z pełną odpowiedzialnością za wykonaną usługę.</p>
+
+  <div class="why-grid" style="position:relative">
+    <div class="why-card">
+      <div class="why-num">01</div>
+      <div class="why-title">Doświadczenie</div>
+      <p class="why-text">Ponad 15 lat w branży hydraulicznej. Setki zrealizowanych instalacji w budynkach mieszkalnych i komercyjnych.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">02</div>
+      <div class="why-title">Terminowość</div>
+      <p class="why-text">Szanujemy Twój czas. Przyjeżdżamy o umówionej porze i kończymy prace zgodnie z harmonogramem.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">03</div>
+      <div class="why-title">Uczciwe ceny</div>
+      <p class="why-text">Wycena bezpłatna, bez ukrytych kosztów. Płacisz dokładnie tyle, ile ustaliliśmy przed rozpoczęciem prac.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">04</div>
+      <div class="why-title">Gwarancja</div>
+      <p class="why-text">Udzielamy gwarancji na wszystkie wykonane prace. Jeśli coś nie gra – wracamy i naprawiamy bezpłatnie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REALIZACJE -->
+<section id="realizacje">
+  <div class="section-label">Portfolio</div>
+  <div class="section-title">Przykładowe <span>Realizacje</span></div>
+  <p class="section-desc">Wykonujemy zlecenia zarówno dla klientów indywidualnych, jak i firm budowlanych, deweloperów i wspólnot mieszkaniowych.</p>
+
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb t1">🏠</div>
+      <div class="project-body">
+        <div class="project-tag">Dom jednorodzinny</div>
+        <div class="project-name">Kompleksowa instalacja CO i wod-kan</div>
+        <p class="project-detail">Pełna instalacja centralnego ogrzewania z kotłem gazowym kondensacyjnym, ogrzewanie podłogowe, instalacja wodno-kanalizacyjna w nowo wybudowanym domu.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb t2">🏢</div>
+      <div class="project-body">
+        <div class="project-tag">Obiekt komercyjny</div>
+        <div class="project-name">Modernizacja instalacji biurowca</div>
+        <p class="project-detail">Wymiana przestarzałej instalacji grzewczej, montaż nowoczesnych grzejników panelowych, przełożenie pionów kanalizacyjnych.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb t3">🛁</div>
+      <div class="project-body">
+        <div class="project-tag">Remont łazienki</div>
+        <div class="project-name">Łazienka od A do Z</div>
+        <p class="project-detail">Kompleksowy montaż armatury, kabiny prysznicowej, wanny wolnostojącej, podgrzewacza wody. Instalacja ogrzewania podłogowego elektrycznego.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="section-label">Skontaktuj się</div>
+  <div class="section-title">Zadzwoń lub <span>napisz</span></div>
+  <p class="section-desc">Chętnie odpowiemy na Twoje pytania i bezpłatnie wycenimy zakres prac. Działamy na terenie Ożarowa Mazowieckiego i okolic.</p>
+
+  <div class="contact-wrap">
+    <div class="contact-info-block">
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Telefon</div>
+          <a href="tel:+48000000000" class="contact-item-value">+48 000 000 000</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div>
+          <div class="contact-item-label">E-mail</div>
+          <a href="/cdn-cgi/l/email-protection#b2d9dddcc6d3d9c6f2dfd3d5c1d7c0c5dbc19cc2de" class="contact-item-value"><span class="__cf_email__" data-cfemail="bed5d1d0cadfd5cafed3dfd9cddbccc9d7cd90ced2">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Obszar działania</div>
+          <span class="contact-item-value" style="cursor:default">Ożarów Mazowiecki i okolice (30 km)</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div>
+          <div class="contact-item-label">Godziny pracy</div>
+          <span class="contact-item-value" style="cursor:default">Pn–Pt: 7:00–18:00 | Sob: 8:00–14:00</span>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem; padding: 1.4rem; background: #fff7e6; border-left: 4px solid var(--accent); border-radius:4px;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; color:var(--navy); margin-bottom:4px;">Awaria? Dzwonimy ASAP.</div>
+        <div style="font-size:0.92rem; color:#5a4010; line-height:1.6;">W przypadku awarii hydraulicznej staramy się dotrzeć do Ciebie w ciągu 2–4 godzin. Działamy 7 dni w tygodniu.</div>
+      </div>
+    </div>
+
+    <form class="contact-form" id="contactForm" action="https://formspree.io/f/TWOJE_ID" method="POST">
+      <div class="form-row">
+        <div class="field">
+          <label>Imię i nazwisko</label>
+          <input type="text" name="imie" placeholder="Jan Kowalski" required>
+        </div>
+        <div class="field">
+          <label>Telefon</label>
+          <input type="tel" name="telefon" placeholder="+48 ...">
+        </div>
+      </div>
+      <div class="field">
+        <label>E-mail</label>
+        <input type="email" name="email" placeholder="jan@kowalski.pl" required>
+      </div>
+      <div class="field">
+        <label>Rodzaj usługi</label>
+        <select name="usluga">
+          <option value="">– wybierz –</option>
+          <option>Instalacja wodno-kanalizacyjna</option>
+          <option>Instalacja grzewcza / CO</option>
+          <option>Remont łazienki / kuchni</option>
+          <option>Usunięcie awarii</option>
+          <option>Przyłącze wody / kanalizacji</option>
+          <option>Przegląd / serwis</option>
+          <option>Inne</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Opis zlecenia</label>
+        <textarea name="opis" placeholder="Opisz krótko, co trzeba zrobić..."></textarea>
+      </div>
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit" class="form-submit" id="submitBtn">Wyślij zapytanie →</button>
+      <div id="formSuccess" style="display:none; margin-top:1rem; padding:1rem 1.4rem; background:#e6f7ec; border-left:4px solid #2a8a4a; border-radius:4px; color:#1a5a30; font-weight:700;">
+        ✅ Dziękujemy! Odezwiemy się najszybciej jak to możliwe.
+      </div>
+      <div id="formError" style="display:none; margin-top:1rem; padding:1rem 1.4rem; background:#fde8e8; border-left:4px solid #c03030; border-radius:4px; color:#7a1010; font-weight:700;">
+        ❌ Coś poszło nie tak. Spróbuj ponownie lub zadzwoń bezpośrednio.
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+// ─── ACCORDION ───
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  // close all
+  document.querySelectorAll('.acc-header').forEach(b => {
+    b.classList.remove('open');
+    b.nextElementSibling.classList.remove('open');
+  });
+  // open clicked (if wasn't open)
+  if (!isOpen) {
+    btn.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+// ─── FORM AJAX (Formspree) ───
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const ok  = document.getElementById('formSuccess');
+  const err = document.getElementById('formError');
+  ok.style.display = 'none';
+  err.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Wysyłanie…';
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      ok.style.display = 'block';
+      this.reset();
+    } else {
+      err.style.display = 'block';
+    }
+  } catch {
+    err.style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Wyślij zapytanie →';
+});
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2025 <strong>MAG SERWIS Grzegor
